@@ -1,18 +1,19 @@
 package org.example.basesource.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.example.basesource.config.serialize.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
-@RequestMapping("")
+@RequestMapping("/health-check")
 @RequiredArgsConstructor
 public class HealthCheckController {
 
-    @GetMapping("/healthcheck")
-    public ResponseEntity<?> getHealthCheck() {
-        return ResponseEntity.ok("health check is ok!");
+    @GetMapping()
+    public ApiResponse<String> getHealthCheck() {
+        return ApiResponse.success("health check is ok!");
     }
 }

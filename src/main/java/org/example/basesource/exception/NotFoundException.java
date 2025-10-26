@@ -1,7 +1,9 @@
 package org.example.basesource.exception;
 
-public class NotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class NotFoundException extends AppException {
     public NotFoundException(String message) {
-        super(message);
+        super(404, message, HttpStatus.NOT_FOUND);
     }
 }

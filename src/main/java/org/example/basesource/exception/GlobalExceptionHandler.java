@@ -1,45 +1,33 @@
 package org.example.basesource.exception;
 
-import org.springframework.http.ResponseEntity;
+import java.util.Objects;
+
+import org.example.basesource.config.serialize.ApiResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = RuntimeException.class)
-    ResponseEntity<String> handlingRuntimeException(RuntimeException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+    @ExceptionHandler(AppException.class)
+    @ResponseBody
+    public ApiResponse<?> handleAppException(AppException ex) {
+        return ApiResponse.error(ex.getCode(), ex.getMessage());
     }
 
-    @ExceptionHandler(value = NotFoundException.class)
-    public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
-        return ResponseEntity.status(404).body(ex.getMessage());
-    }
+    //    @ExceptionHandler(AccessDeniedException.class)
+    //    @ResponseBody
+    //    ApiResponse<?> handlingAccessDeniedException(AccessDeniedException ex) {
+    //        return ApiResponse.error(403, ex.getMessage());
+    //    }
 
-    @ExceptionHandler(value = ConflictException.class)
-    public ResponseEntity<String> handleAlreadyExists(ConflictException ex) {
-        return ResponseEntity.status(409).body(ex.getMessage());
-    }
-
-    @ExceptionHandler(value = UnauthorizedException.class)
-    public ResponseEntity<String> handleUnauthorized(UnauthorizedException ex) {
-        return ResponseEntity.status(401).body(ex.getMessage());
-    }
-
-    @ExceptionHandler(value = DataConflictException.class)
-    public ResponseEntity<String> handleDataConflict(DataConflictException ex) {
-        return ResponseEntity.status(409).body(ex.getMessage());
-    }
-
-    @ExceptionHandler(value = BadRequestException.class)
-    public ResponseEntity<String> handleBadRequestException(BadRequestException ex) {
-        return ResponseEntity.status(400).body(ex.getMessage());
-    }
-
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    ResponseEntity<String> handlingValidation(MethodArgumentNotValidException exception) {
-        return ResponseEntity.badRequest().body(exception.getFieldError().getDefaultMessage());
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ApiResponse<?> handlingValidation(MethodArgumentNotValidException exception) {
+        String message = Objects.requireNonNull(exception.getFieldError()).getDefaultMessage();
+        return ApiResponse.error(HttpStatus.BAD_REQUEST.value(), message);
     }
 }

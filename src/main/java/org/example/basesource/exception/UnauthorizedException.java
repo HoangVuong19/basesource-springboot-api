@@ -1,7 +1,9 @@
 package org.example.basesource.exception;
 
-public class UnauthorizedException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class UnauthorizedException extends AppException {
     public UnauthorizedException(String message) {
-        super(message);
+        super(401, message, HttpStatus.UNAUTHORIZED);
     }
 }

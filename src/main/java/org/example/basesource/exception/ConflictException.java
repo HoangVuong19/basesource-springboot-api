@@ -1,7 +1,9 @@
 package org.example.basesource.exception;
 
-public class ConflictException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class ConflictException extends AppException {
     public ConflictException(String message) {
-        super(message);
+        super(409, message, HttpStatus.CONFLICT);
     }
 }

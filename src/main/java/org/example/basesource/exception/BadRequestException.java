@@ -1,7 +1,9 @@
 package org.example.basesource.exception;
 
-public class BadRequestException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class BadRequestException extends AppException {
     public BadRequestException(String message) {
-        super(message);
+        super(400, message, HttpStatus.BAD_REQUEST);
     }
 }

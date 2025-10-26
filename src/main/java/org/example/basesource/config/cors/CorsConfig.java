@@ -1,13 +1,13 @@
-package org.example.basesource.config;
+package org.example.basesource.config.cors;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 public class CorsConfig {
@@ -25,4 +25,4 @@ public class CorsConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-} 
+}
